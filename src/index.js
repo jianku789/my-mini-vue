@@ -3,7 +3,7 @@ import { effect } from "./reactivity/effect"
 
 const observed = (window.observed = reactive({
     count1: 0,
-    count2: 11
+    count2: 111
 }));
 
 effect(() => {
