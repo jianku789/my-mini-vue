@@ -15,7 +15,7 @@ export function ref(value) {
 export function isRef(value) {
     return (value && value.__isRef);
 }
-
+// 用类对ref实现
 class RefImpl {
     constructor(value) {
         this.__isRef = true;
@@ -28,12 +28,14 @@ class RefImpl {
     }
 
     set value(newValue) {
-        if (hasChanged(this.__value, newValue));
-        this.__value = newValue;
-        trigger(this, 'value');
+        // 当值发生改变时才触发trigger
+        if (hasChanged(this.__value, newValue)){
+            this.__value = convert(newValue);
+            trigger(this, 'value');
+        };
     }
 }
-
+// 若传入value是object类型则用reactive进行响应式代理
 function convert(value) {
     return isObject(value) ? reactive(value) : value;
 }

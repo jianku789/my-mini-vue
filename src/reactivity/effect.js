@@ -1,5 +1,6 @@
-// 记录当前运行的函数
+// activeEffect记录当前运行的函数
 let activeEffect;
+// effectStack栈保存activeEffect中嵌套effect
 let effectStack = [];
 export function effect(fn) {
   const effectFn = () => {
