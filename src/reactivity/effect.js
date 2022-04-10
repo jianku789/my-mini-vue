@@ -1,14 +1,17 @@
 // 记录当前运行的函数
 let activeEffect;
-
+let effectStack = [];
 export function effect(fn) {
   const effectFn = () => {
     try {
       activeEffect = effectFn;
+      effectStack.push(activeEffect);
       return fn();
     } finally {
-      // effect执行完赋值为undefined
-      activeEffect = undefined;
+      // effect嵌套特例
+      // 使用effectStack栈当栈空时activeEffect赋值为undefine
+      effectStack.pop();
+      activeEffect = effectStack[effectStack.length - 1];
     }
   }
   effectFn();
